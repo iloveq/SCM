@@ -116,7 +116,7 @@ public class ActionProcessor extends AbstractProcessor {
         List<FieldSpec> fieldSpecs = new ArrayList<>();
 
         for (Map.Entry<String, ActionMeta> entry : actionMap.entrySet()) {
-            FieldSpec field = FieldSpec.builder(String.class, entry.getKey(), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).initializer(entry.getValue().getSourcePath()).build();
+            FieldSpec field = FieldSpec.builder(String.class, entry.getKey()).addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).initializer(entry.getValue().getSourcePath()).build();
             fieldSpecs.add(field);
         }
 
