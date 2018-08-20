@@ -113,14 +113,20 @@ public class ActionProcessor extends AbstractProcessor {
             return null;
         }
 
+        logger.info("map size " + actionMap.size());
+
         List<FieldSpec> fieldSpecs = new ArrayList<>();
 
         for (Map.Entry<String, ActionMeta> entry : actionMap.entrySet()) {
-            FieldSpec field = FieldSpec.builder(String.class, entry.getKey()).addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).initializer(entry.getValue().getSourcePath()).build();
+            FieldSpec field = FieldSpec.
+                    builder(String.class, entry.getKey())
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                    .initializer(entry.getValue().getSourcePath())
+                    .build();
             fieldSpecs.add(field);
         }
 
-        logger.info("start generateJavaSuperFile ..... ");
+        logger.info("start generateJavaSuperFile ..... " + fieldSpecs.size());
 
         TypeSpec ts = TypeSpec.classBuilder("SCMTable")
                 .addModifiers(Modifier.PUBLIC)
