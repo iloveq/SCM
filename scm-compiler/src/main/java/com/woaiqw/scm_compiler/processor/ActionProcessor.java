@@ -120,7 +120,8 @@ public class ActionProcessor extends AbstractProcessor {
             fieldSpecs.add(field);
         }
 
-        logger.error("start generateJavaSuperFile ..... ");
+        logger.info("start generateJavaSuperFile ..... ");
+
         TypeSpec ts = TypeSpec.classBuilder("SCMTable")
                 .addModifiers(Modifier.PUBLIC)
                 .addFields(fieldSpecs)
