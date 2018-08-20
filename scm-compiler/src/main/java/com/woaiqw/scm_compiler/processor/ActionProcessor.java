@@ -1,6 +1,7 @@
 package com.woaiqw.scm_compiler.processor;
 
 import com.google.auto.service.AutoService;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -121,7 +122,7 @@ public class ActionProcessor extends AbstractProcessor {
             FieldSpec field = FieldSpec.
                     builder(String.class, entry.getKey())
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                    .initializer(entry.getValue().getSourcePath())
+                    .initializer(String.valueOf(CodeBlock.builder().add("$S",entry.getValue().getSourcePath())))
                     .build();
             fieldSpecs.add(field);
         }
