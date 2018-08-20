@@ -1,0 +1,1 @@
+include ':app',':home',':common',':scm-api',':scm-compiler',':scm-annotation'
