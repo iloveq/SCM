@@ -25,4 +25,5 @@ dependencies {
     //ServerRegisterCenter
     api project(':scm-api')
     annotationProcessor project(':scm-compiler')
+    //annotationProcessor files('libs/scm-compiler.jar')
 }

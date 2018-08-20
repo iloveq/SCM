@@ -11,6 +11,7 @@ import com.woaiqw.scm_compiler.utils.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
+import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
 import static com.woaiqw.scm_compiler.utils.Constants.ANNOTATION_ACTION_PATH;
@@ -91,7 +93,12 @@ public class ActionProcessor extends AbstractProcessor {
 
         for (Element e : actionElements) {
             if (e.getKind() == ElementKind.CLASS) {
-                String sourcePath = ((TypeElement) e.getEnclosingElement()).getQualifiedName().toString();
+                TypeElement classElement = (TypeElement) e;
+                PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
+                String className = classElement.getSimpleName().toString();
+                String sourcePath = packageElement.getQualifiedName().toString() + "." + className;
+                logger.info("className:" + className);
+                logger.info("sourcePath:" + sourcePath);
                 Action annotation = e.getAnnotation(Action.class);
                 String name = annotation.name();
                 actionMap.put(name, ActionMeta.build(name, sourcePath));
@@ -102,11 +109,11 @@ public class ActionProcessor extends AbstractProcessor {
 
     private JavaFile generateJavaSuperRFile() throws IOException {
 
-        ArrayList<FieldSpec> fieldSpecs = new ArrayList<>();
-
         if (actionMap == null || actionMap.size() == 0) {
             return null;
         }
+
+        List<FieldSpec> fieldSpecs = new ArrayList<>();
 
         for (Map.Entry<String, ActionMeta> entry : actionMap.entrySet()) {
             FieldSpec field = FieldSpec.builder(String.class, entry.getKey(), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL).initializer(entry.getValue().getSourcePath()).build();
@@ -114,12 +121,12 @@ public class ActionProcessor extends AbstractProcessor {
         }
 
         logger.error("start generateJavaSuperFile ..... ");
+        TypeSpec ts = TypeSpec.classBuilder("SCMTable")
+                .addModifiers(Modifier.PUBLIC)
+                .addFields(fieldSpecs)
+                .build();
 
-        return JavaFile.builder(PACKAGE_OF_GENERATE_FILE,
-                TypeSpec.classBuilder("SCMTable")
-                        .addModifiers(Modifier.PUBLIC)
-                        .addFields(fieldSpecs)
-                        .build())
+        return JavaFile.builder(PACKAGE_OF_GENERATE_FILE, ts)
                 .addFileComment(FILE_COMMENT)
                 .build();
 
