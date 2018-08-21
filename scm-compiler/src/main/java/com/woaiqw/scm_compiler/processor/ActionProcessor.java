@@ -31,16 +31,17 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
 import static com.woaiqw.scm_compiler.utils.Constants.ANNOTATION_ACTION_PATH;
+import static com.woaiqw.scm_compiler.utils.Constants.DEFAULT_MODULE_NAME;
 import static com.woaiqw.scm_compiler.utils.Constants.FILE_COMMENT;
+import static com.woaiqw.scm_compiler.utils.Constants.KEY_MODULE_NAME;
 import static com.woaiqw.scm_compiler.utils.Constants.PACKAGE_OF_GENERATE_FILE;
-import static com.woaiqw.scm_compiler.utils.Constants.SCM;
 
 
 /**
  * Created by haoran on 2018/8/16.
  */
 
-@SupportedOptions(SCM)
+@SupportedOptions({KEY_MODULE_NAME})
 @SupportedAnnotationTypes({ANNOTATION_ACTION_PATH})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
@@ -49,7 +50,7 @@ public class ActionProcessor extends AbstractProcessor {
     private Logger logger;
     private Filer filer;
     private Map<String, ActionMeta> actionMap = new HashMap<>();
-
+    private String moduleName = DEFAULT_MODULE_NAME;
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -57,6 +58,12 @@ public class ActionProcessor extends AbstractProcessor {
 
         logger = new Logger(processingEnv.getMessager());
         filer = processingEnv.getFiler();
+        Map<String, String> options = processingEnv.getOptions();
+        logger.info(">>> options <<<" + options);
+        if (options != null && options.size() != 0) {
+            moduleName = options.get(KEY_MODULE_NAME);
+        }
+        logger.info(">>> option - module - name <<<" + moduleName);
 
     }
 
@@ -129,11 +136,9 @@ public class ActionProcessor extends AbstractProcessor {
 
         logger.info("start generateJavaSuperFile ..... " + fieldSpecs.size());
 
-        String module = actionMap.get(fieldSpecs.get(0).name).getModule();
+        logger.info("moduleName ..... " + moduleName);
 
-        logger.info("module ..... " + module);
-
-        TypeSpec ts = TypeSpec.classBuilder(module + "SCMTable")
+        TypeSpec ts = TypeSpec.classBuilder(moduleName + "SCMTable")
                 .addModifiers(Modifier.PUBLIC)
                 .addFields(fieldSpecs)
                 .build();
