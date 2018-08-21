@@ -10,6 +10,7 @@ android {
         versionName rootProject.ext.versionName
         javaCompileOptions {
             annotationProcessorOptions {
+                arguments = [KEY_MODULE_NAME:"Main"]
                 includeCompileClasspath true
             }
         }
