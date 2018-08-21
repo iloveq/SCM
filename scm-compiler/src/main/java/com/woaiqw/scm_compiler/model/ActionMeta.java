@@ -7,12 +7,23 @@ package com.woaiqw.scm_compiler.model;
 public class ActionMeta {
 
     private String name;
+    private String module;
     private int priority;
     private String process;
     private String sourcePath;
 
 
-    public ActionMeta(String name, int priority, String process, String act) {
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
+
+    public ActionMeta(String name, String module, int priority, String process, String act) {
+        this.module = module;
+
         this.name = name;
         this.priority = priority;
         this.process = process;
@@ -47,26 +58,29 @@ public class ActionMeta {
         return sourcePath;
     }
 
+
     public void setSourcePath(String sourcePath) {
         this.sourcePath = sourcePath;
     }
 
-    public static ActionMeta build(String name, int priority, String process, String sourcePath) {
-        return new ActionMeta(name, priority, process, sourcePath);
+    public static ActionMeta build(String name, String module, int priority, String process, String sourcePath) {
+        return new ActionMeta(name, module, priority, process, sourcePath);
     }
 
-    public static ActionMeta build(String name, String sourcePath) {
-        return new ActionMeta(name, 0, "", sourcePath);
+    public static ActionMeta build(String name, String module, String sourcePath) {
+        return new ActionMeta(name, module, 0, "", sourcePath);
     }
 
     @Override
     public String toString() {
         return "ActionMeta{" +
                 "name='" + name + '\'' +
+                ", module='" + module + '\'' +
                 ", priority=" + priority +
                 ", process='" + process + '\'' +
-                ", sourcePath=" + sourcePath +
+                ", sourcePath='" + sourcePath + '\'' +
                 '}';
     }
+
 
 }

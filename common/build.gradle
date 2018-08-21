@@ -24,6 +24,7 @@ dependencies {
     api "com.android.support:recyclerview-v7:${versions.support_library}"
     //ServerRegisterCenter
     api project(':scm-api')
-    annotationProcessor project(':scm-compiler')
-    //annotationProcessor files('libs/scm-compiler.jar')
+    //annotationProcessor project(':scm-compiler')
+    annotationProcessor files('libs/scm-compiler.jar')
+    compile 'com.squareup:javapoet:1.8.0'
 }

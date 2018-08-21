@@ -4,7 +4,7 @@ import com.woaiqw.scm_annotation.annotion.Action;
 
 
 
-@Action(name = "HomeEntry")
+@Action(name = "HomeEntry",module = "Home")
 public class HomeEntryAction {
 
 }

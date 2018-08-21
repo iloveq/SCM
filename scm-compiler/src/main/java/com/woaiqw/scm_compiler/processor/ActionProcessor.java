@@ -1,7 +1,6 @@
 package com.woaiqw.scm_compiler.processor;
 
 import com.google.auto.service.AutoService;
-import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -102,7 +101,8 @@ public class ActionProcessor extends AbstractProcessor {
                 logger.info("sourcePath:" + sourcePath);
                 Action annotation = e.getAnnotation(Action.class);
                 String name = annotation.name();
-                actionMap.put(name, ActionMeta.build(name, sourcePath));
+                String module = annotation.module();
+                actionMap.put(name, ActionMeta.build(name, module, sourcePath));
             }
         }
 
@@ -122,14 +122,18 @@ public class ActionProcessor extends AbstractProcessor {
             FieldSpec field = FieldSpec.
                     builder(String.class, entry.getKey())
                     .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                    .initializer(String.valueOf(CodeBlock.builder().add("$S",entry.getValue().getSourcePath())))
+                    .initializer("$S", entry.getValue().getSourcePath())
                     .build();
             fieldSpecs.add(field);
         }
 
         logger.info("start generateJavaSuperFile ..... " + fieldSpecs.size());
 
-        TypeSpec ts = TypeSpec.classBuilder("SCMTable")
+        String module = actionMap.get(fieldSpecs.get(0).name).getModule();
+
+        logger.info("module ..... " + module);
+
+        TypeSpec ts = TypeSpec.classBuilder(module + "SCMTable")
                 .addModifiers(Modifier.PUBLIC)
                 .addFields(fieldSpecs)
                 .build();
