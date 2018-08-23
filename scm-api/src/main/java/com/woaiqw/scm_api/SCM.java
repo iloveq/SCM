@@ -39,14 +39,14 @@ public class SCM {
                 Class clazz = Class.forName(PACKAGE_OF_GENERATE_FILE + "." + moduleName + "SCMTable");
                 Field[] fields = clazz.getFields();
                 for (Field field : fields) {
-                    System.out.println("111" + "action:" + field.getName() + "value:" + field.get(field.getName()));
                     String name = field.getName();
                     String path = (String) field.get(name);
+                    System.out.println("111" + "action:" + field.getName() + "value:" + field.get(field.getName()));
                     ScAction sca = (ScAction) Class.forName(path).newInstance();
                     actionMap.put(name, sca);
                 }
             } catch (Exception e) {
-                Log.e(Constants.SCM, e.getMessage());
+//                Log.e(Constants.SCM, e.getMessage());
             }
         }
         isReady = true;

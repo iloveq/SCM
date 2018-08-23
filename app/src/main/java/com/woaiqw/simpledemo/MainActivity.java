@@ -10,8 +10,20 @@ import com.woaiqw.scm_api.SCM;
 import com.woaiqw.scm_api.ScCallback;
 import com.woaiqw.scm_api.utils.Constants;
 
+import java.util.concurrent.CountDownLatch;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    CountDownLatch countDownLatch = new CountDownLatch(2) {
+        @Override
+        public void await() throws InterruptedException {
+            super.await();
+            System.out.println(Thread.currentThread().getName() + " count down is ok");
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+
         try {
             SCM.get().req(MainActivity.this, "LoadConfig", new ScCallback() {
                 @Override
@@ -51,5 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (Exception e) {
             Log.e(Constants.SCM, e.getMessage());
         }
+
     }
+
 }
