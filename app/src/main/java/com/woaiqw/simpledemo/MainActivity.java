@@ -19,11 +19,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findViewById(R.id.tv_load_config).setOnClickListener(this);
         try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
             SCM.get().req(this, "HomeEntry", new ScCallback() {
                 @Override
                 public void onCallback(boolean b, String data, String tag) {
                     if (b)
-                        Log.e("MainActivity", data);
+                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
