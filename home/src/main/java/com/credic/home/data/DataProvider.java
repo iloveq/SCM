@@ -19,7 +19,7 @@ public class DataProvider {
         @Override
         public void run() {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(2000);
                 callback.onCallback(true, "加载了配置：今天是晴天！", "HHH");
             } catch (InterruptedException e) {
                 e.printStackTrace();
