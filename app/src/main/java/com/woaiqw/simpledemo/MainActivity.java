@@ -2,7 +2,10 @@ package com.woaiqw.simpledemo;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.os.MessageQueue;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -49,6 +52,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         findViewById(R.id.tv_load_config).setOnClickListener(this);
         h.postDelayed(entryHomeActivityTask, 3000);
+    }
+
+    @Override
+    protected void onResume() {
+        final long time = SystemClock.uptimeMillis();
+        super.onResume();
+        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+            @Override
+            public boolean queueIdle() {
+                // on Measure() -> onDraw() 耗时
+                Log.i(MainActivity.this.getClass().getSimpleName(), "onCreate -> idle : " + (SystemClock.uptimeMillis() - time));
+                return false;
+            }
+        });
     }
 
 
