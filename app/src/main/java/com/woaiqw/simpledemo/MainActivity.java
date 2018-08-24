@@ -22,24 +22,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.tv_load_config).setOnClickListener(this);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    }
+
+    private Runnable entryHomeActivityTask = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                SCM.get().req(MainActivity.this, "HomeEntry", new ScCallback() {
+                    @Override
+                    public void onCallback(boolean b, final String data, String tag) {
+                        if (b)
+                            Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (Exception e) {
+                Log.e(Constants.SCM, e.getMessage());
+            }
         }
-        try {
-            SCM.get().req(this, "HomeEntry", new ScCallback() {
-                @Override
-                public void onCallback(boolean b, final String data, String tag) {
-                    if (b)
-                        Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
-                }
-            });
-        } catch (Exception e) {
-            Log.e(Constants.SCM, e.getMessage());
-        }
+    };
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        h.postDelayed(entryHomeActivityTask, 3000);
     }
 
     private WeakHandler h = new WeakHandler(new Handler.Callback() {
