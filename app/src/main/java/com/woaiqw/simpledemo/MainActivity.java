@@ -17,12 +17,14 @@ import com.woaiqw.scm_api.utils.Constants;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.tv_load_config).setOnClickListener(this);
-    }
+    private WeakHandler h = new WeakHandler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            String s = (String) msg.obj;
+            Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    });
 
     private Runnable entryHomeActivityTask = new Runnable() {
         @Override
@@ -41,6 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        findViewById(R.id.tv_load_config).setOnClickListener(this);
+    }
+
 
     @Override
     protected void onResume() {
@@ -48,14 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         h.postDelayed(entryHomeActivityTask, 3000);
     }
 
-    private WeakHandler h = new WeakHandler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            String s = (String) msg.obj;
-            Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
-            return false;
-        }
-    });
 
     @Override
     public void onClick(View v) {
