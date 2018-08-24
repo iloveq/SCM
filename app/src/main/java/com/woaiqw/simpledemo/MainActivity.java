@@ -48,12 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.tv_load_config).setOnClickListener(this);
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         h.postDelayed(entryHomeActivityTask, 3000);
     }
 
@@ -78,4 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        h.removeCallbacksAndMessages(null);
+    }
 }
