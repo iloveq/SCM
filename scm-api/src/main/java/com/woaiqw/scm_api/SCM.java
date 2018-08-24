@@ -46,7 +46,7 @@ public class SCM {
                     actionMap.put(name, sca);
                 }
             } catch (Exception e) {
-//                Log.e(Constants.SCM, e.getMessage());
+               Log.e(Constants.SCM, e.getMessage());
             }
         }
         isReady = true;

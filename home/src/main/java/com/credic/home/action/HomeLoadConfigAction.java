@@ -2,6 +2,7 @@ package com.credic.home.action;
 
 import android.content.Context;
 
+import com.credic.home.data.DataProvider;
 import com.woaiqw.scm_annotation.annotion.Action;
 import com.woaiqw.scm_api.ScAction;
 import com.woaiqw.scm_api.ScCallback;
@@ -11,19 +12,13 @@ import com.woaiqw.scm_api.ScCallback;
  */
 @Action(name = "LoadConfig")
 public class HomeLoadConfigAction implements ScAction {
+
+
     @Override
     public void invoke(Context context, String param, ScCallback callback) {
-
-        loadConfig();
-        callback.onCallback(true, "加载了配置", "HHH");
+        //模拟加载网络数据
+        DataProvider.getConfig(callback);
 
     }
 
-    private void loadConfig() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 }
