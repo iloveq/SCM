@@ -34,32 +34,45 @@ public class SCM {
     }
 
     public void scanningSCMTable(String[] moduleNames) {
-        for (String moduleName : moduleNames) {
-            try {
-                Class clazz = Class.forName(PACKAGE_OF_GENERATE_FILE + "." + moduleName + "SCMTable");
-                Field[] fields = clazz.getFields();
-                for (Field field : fields) {
-                    String name = field.getName();
-                    String path = (String) field.get(name);
-                    System.out.println("111" + "action:" + field.getName() + "value:" + field.get(field.getName()));
-                    ScAction sca = (ScAction) Class.forName(path).newInstance();
-                    actionMap.put(name, sca);
+        if (moduleNames != null && moduleNames.length != 0) {
+            for (String moduleName : moduleNames) {
+                try {
+                    Class clazz = Class.forName(PACKAGE_OF_GENERATE_FILE + "." + moduleName + "SCMTable");
+                    Field[] fields = clazz.getFields();
+                    if (fields != null && fields.length != 0) {
+                        for (Field field : fields) {
+                            String name = field.getName();
+                            String path = (String) field.get(name);
+                            System.out.println("111" + "action:" + field.getName() + "value:" + field.get(field.getName()));
+                            ScAction sca = (ScAction) Class.forName(path).newInstance();
+                            actionMap.put(name, sca);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(Constants.SCM, e.getMessage());
                 }
-            } catch (Exception e) {
-               Log.e(Constants.SCM, e.getMessage());
             }
+        } else {
+            throw new IllegalStateException(" moduleNames must a exit arr for scanning ");
         }
+
         isReady = true;
     }
 
-
-    public void req(Context context,String action,ScCallback callback) throws Exception{
-        req(context,action,null,callback);
+    /**
+     * 请求服务/不带参数 param
+     *
+     * @param actionName 请求的服务名称
+     * @param callback   标准返回
+     * @throws Exception
+     */
+    public void req(Context context, String actionName, ScCallback callback) throws Exception {
+        req(context, actionName, null, callback);
     }
 
 
     /**
-     * 请求服务
+     * 请求服务/带参数
      *
      * @param actionName 请求的服务名称
      * @param param      携带参数，json格式的string
