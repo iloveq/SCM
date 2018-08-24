@@ -60,10 +60,10 @@ public class SCM {
     }
 
     /**
-     * 请求服务/不带参数 param
+     * request/ no param
      *
-     * @param actionName 请求的服务名称
-     * @param callback   标准返回
+     * @param actionName the annotation of action name
+     * @param callback   the callback
      * @throws Exception
      */
     public void req(Context context, String actionName, ScCallback callback) throws Exception {
@@ -72,11 +72,11 @@ public class SCM {
 
 
     /**
-     * 请求服务/带参数
+     * request/ param
      *
-     * @param actionName 请求的服务名称
-     * @param param      携带参数，json格式的string
-     * @param callback   标准返回
+     * @param actionName the annotation of action name
+     * @param param      request param or json
+     * @param callback   the callback
      * @throws Exception
      */
     public void req(Context context, String actionName, String param, ScCallback callback) throws Exception {

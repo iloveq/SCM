@@ -1,5 +1,13 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayName = 'scm-api'
+    artifact = bintrayName
+    libraryName = 'SCM sdk'
+    libraryDescription = 'A scm for android of modularization'
+    libraryVersion = scm_api_version
+}
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -17,11 +25,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        lintOptions { abortOnError false }
     }
 
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     api project(':scm-annotation')
 }
+
+apply from: '../installv1.gradle'
+apply from: '../bintrayv1.gradle'
+
+

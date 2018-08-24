@@ -1,8 +1,19 @@
 apply plugin: 'java-library'
 
+ext {
+    bintrayName = 'scm-annotation'
+    artifact = bintrayName
+    libraryName = 'SCM annotation'
+    libraryDescription = 'The annotation used in scm api'
+    libraryVersion = scm_annotation_version
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
+
+apply from: '../installv1.gradle'
+apply from: '../bintrayv1.gradle'

@@ -7,6 +7,7 @@
 ### Application 初始化 运行期扫描、缓存注册表
 ### 调用 SCM.req(String action,Callback A)
 
+##### gradle install  /  gradlew bintrayUpload  上传项目到 maven
 
 感谢 ：）
 该项目 SCM 不支持 Install Run
