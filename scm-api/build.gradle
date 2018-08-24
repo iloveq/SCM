@@ -34,7 +34,7 @@ dependencies {
     api project(':scm-annotation')
 }
 
-apply from: '../installv1.gradle'
-apply from: '../bintrayv1.gradle'
+apply from: "${rootProject.projectDir}/installv1.gradle"
+apply from: "${rootProject.projectDir}/bintrayv1.gradle"
 
 

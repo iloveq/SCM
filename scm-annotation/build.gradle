@@ -15,5 +15,5 @@ dependencies {
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
-apply from: '../installv1.gradle'
-apply from: '../bintrayv1.gradle'
+apply from: "${rootProject.projectDir}/installv1.gradle"
+apply from: "${rootProject.projectDir}/bintrayv1.gradle"
