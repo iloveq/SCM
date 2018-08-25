@@ -25,6 +25,6 @@ dependencies {
     //ServerRegisterCenter
     api project(':scm-api')
     //annotationProcessor project(':scm-compiler')
-    annotationProcessor files('libs/scm-compiler.jar')
     compile 'com.squareup:javapoet:1.8.0'
+    annotationProcessor files('libs/scm-compiler-0.0.1.jar')
 }
