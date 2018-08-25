@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.credic.common.utils.WeakHandler;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public boolean handleMessage(Message msg) {
             String s = (String) msg.obj;
             Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+            tv.setText(s);
             return false;
         }
     });
@@ -45,12 +47,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.tv_load_config).setOnClickListener(this);
+        tv = findViewById(R.id.tv_load_config);
+        tv.setOnClickListener(this);
         h.postDelayed(entryHomeActivityTask, 3000);
     }
 
