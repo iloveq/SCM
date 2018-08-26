@@ -98,4 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStop();
         h.removeCallbacksAndMessages(null);
     }
+
+    public void closeSelf() {
+        this.finish();
+    }
 }
