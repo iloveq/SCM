@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onReceive(Context arg0, Intent intent) {
             String action = intent.getAction();
-            if (action.equals("finish")) {
+            if ("finish".equals(action)) {
                 finish();
             }
         }
