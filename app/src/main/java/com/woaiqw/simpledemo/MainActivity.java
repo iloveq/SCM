@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public boolean handleMessage(Message msg) {
             String s = (String) msg.obj;
             Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
-            tv.setText(s);
+            tvLoadConfig.setText(s);
             return false;
         }
     });
@@ -47,15 +47,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     };
-    private TextView tv;
+    private TextView tvLoadConfig, tvJumpPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv = findViewById(R.id.tv_load_config);
-        tv.setOnClickListener(this);
-        h.postDelayed(entryHomeActivityTask, 3000);
+        tvLoadConfig = findViewById(R.id.tv_load_config);
+        tvJumpPage = findViewById(R.id.tv_jump_page);
+        tvLoadConfig.setOnClickListener(this);
+        tvJumpPage.setOnClickListener(this);
     }
 
     @Override
@@ -76,6 +77,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+        if (v.getId() == R.id.tv_load_config) {
+            //app module 使用用 home module 获取配置
+            loadConfigByHomeModule();
+        } else if (v.getId() == R.id.tv_jump_page) {
+            //3s 后进入 home 进程的 HomeActivity
+            h.postDelayed(entryHomeActivityTask, 3000);
+        }
+
+
+    }
+
+    private void loadConfigByHomeModule() {
         try {
             SCM.get().req(MainActivity.this, "LoadConfig", new ScCallback() {
                 @Override
@@ -83,14 +96,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (b) {
                         Message obtain = Message.obtain();
                         obtain.obj = data;
-                        h.sendMessage(obtain);
+                        if (h != null) {
+                            h.sendMessage(obtain);
+                        } else {
+                            Toast.makeText(MainActivity.this, "WeakHandler has been Gc", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
                 }
             });
         } catch (Exception e) {
             Log.e(Constants.SCM, e.getMessage());
         }
-
     }
 
     @Override
