@@ -8,6 +8,7 @@
 ### 调用 SCM.req(String action,Callback A)
 
 ##### gradle install  /  gradlew bintrayUpload  上传项目到 maven
+##### linux:adb shell dumpsys activity | grep "mFocusedActivity" / windows:adb shell dumpsys activity | findstr "mFocusedActivity"
 
 感谢 ：）
 该项目 SCM 不支持 Install Run
