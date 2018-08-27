@@ -10,6 +10,36 @@
 ##### gradle install  /  gradlew bintrayUpload  上传项目到 maven
 ##### linux:adb shell dumpsys activity | grep "mFocusedActivity" / windows:adb shell dumpsys activity | findstr "mFocusedActivity"
 
+使用：
+1:project
+```
+repositories {
+        ...
+        maven {
+            url  "https://dl.bintray.com/woaigmz/SCM"
+        }
+    }
+```
+2:module
+```
+defaultConfig {
+        ...
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [KEY_MODULE_NAME:"Main"]
+                includeCompileClasspath true
+            }
+        }
+    }
+...
+dependencies {
+    compile 'com.woaigmz.scm:scm-api:0.0.4'
+    compile 'com.woaigmz.scm:scm-annotation:0.0.4'
+    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.4'
+    }
+```
+
+
 感谢 ：）
 该项目 SCM 不支持 Install Run
 随着业务的复杂度增大，业务线纵横交错。
