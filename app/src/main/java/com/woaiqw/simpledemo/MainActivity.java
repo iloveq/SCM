@@ -1,5 +1,10 @@
 package com.woaiqw.simpledemo;
 
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +21,8 @@ import com.credic.common.utils.WeakHandler;
 import com.woaiqw.scm_api.SCM;
 import com.woaiqw.scm_api.ScCallback;
 import com.woaiqw.scm_api.utils.Constants;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,6 +56,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
     private TextView tvLoadConfig, tvJumpPage;
 
+    BroadcastReceiver b = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("finish")) {
+                finish();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvJumpPage = findViewById(R.id.tv_jump_page);
         tvLoadConfig.setOnClickListener(this);
         tvJumpPage.setOnClickListener(this);
+        registerReceiver(b, new IntentFilter("finish"));
     }
 
     @Override
@@ -116,7 +134,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         h.removeCallbacksAndMessages(null);
     }
 
-    public void closeSelf() {
-        this.finish();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(b);
     }
+
+    /*public static void closeSelf(Context context) {
+        try {
+            ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            assert am != null;
+            List<ActivityManager.RunningAppProcessInfo> listOfProcesses = am.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo process : listOfProcesses) {
+                if (process.processName.contains("com.woaiqw.simpledemo.MainActivity")) {
+                    am.killBackgroundProcesses(process.processName);
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }*/
 }
