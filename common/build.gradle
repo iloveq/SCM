@@ -7,12 +7,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [KEY_MODULE_NAME:"Common"]
-                includeCompileClasspath true
-            }
-        }
     }
     buildTypes {
         release {
@@ -29,6 +23,7 @@ dependencies {
     api "com.android.support:appcompat-v7:${versions.support_library}"
     api "com.android.support:recyclerview-v7:${versions.support_library}"
     //ServerRegisterCenter
-    api project(':scm-api')
+    compile 'com.woaigmz.scm:scm-api:0.0.2'
+    compile 'com.woaigmz.scm:scm-annotation:0.0.2'
     annotationProcessor files('libs/scm-compiler-0.0.1.jar')
 }
