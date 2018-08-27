@@ -30,5 +30,5 @@ dependencies {
     if(isBuildAll){
         implementation project(':home')
     }
-
+    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.4'
 }

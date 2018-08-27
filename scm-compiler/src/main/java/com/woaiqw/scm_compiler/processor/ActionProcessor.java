@@ -1,6 +1,6 @@
 package com.woaiqw.scm_compiler.processor;
 
-import com.google.auto.service.AutoService;
+
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
@@ -11,6 +11,7 @@ import com.woaiqw.scm_compiler.utils.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,11 +19,7 @@ import java.util.Set;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedAnnotationTypes;
-import javax.annotation.processing.SupportedOptions;
-import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -41,10 +38,7 @@ import static com.woaiqw.scm_compiler.utils.Constants.PACKAGE_OF_GENERATE_FILE;
  * Created by haoran on 2018/8/16.
  */
 
-@SupportedOptions({KEY_MODULE_NAME})
-@SupportedAnnotationTypes({ANNOTATION_ACTION_PATH})
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
-@AutoService(Processor.class)
+
 public class ActionProcessor extends AbstractProcessor {
 
     private Logger logger;
@@ -149,5 +143,22 @@ public class ActionProcessor extends AbstractProcessor {
 
     }
 
+    @Override
+    public Set<String> getSupportedOptions() {
+        Set<String> options = new LinkedHashSet<>();
+        options.add(KEY_MODULE_NAME);
+        return options;
+    }
 
+    @Override
+    public Set<String> getSupportedAnnotationTypes() {
+        Set<String> types = new LinkedHashSet<>();
+        types.add(ANNOTATION_ACTION_PATH);
+        return types;
+    }
+
+    @Override
+    public SourceVersion getSupportedSourceVersion() {
+        return SourceVersion.RELEASE_8;
+    }
 }
