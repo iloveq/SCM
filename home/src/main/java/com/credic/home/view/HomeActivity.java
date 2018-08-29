@@ -8,14 +8,13 @@ import android.widget.Toast;
 
 import com.credic.home.R;
 import com.woaiqw.scm_api.SCM;
-import com.woaiqw.scm_api.ScCallback;
 import com.woaiqw.scm_api.utils.Constants;
 
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-/****************************************************************************************************/
+    /****************************************************************************************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +29,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         try {
-            SCM.get().req(HomeActivity.this, "CloseMainActivityAction", new ScCallback() {
-                @Override
-                public void onCallback(boolean b, final String data, String tag) {
-                    if (b)
-                        Toast.makeText(HomeActivity.this, data, Toast.LENGTH_SHORT).show();
-                }
+            SCM.get().req(HomeActivity.this, "CloseMainActivityAction", (b, data, tag) -> {
+                if (b)
+                    Toast.makeText(HomeActivity.this, data, Toast.LENGTH_SHORT).show();
             });
         } catch (Exception e) {
             Log.e(Constants.SCM, e.getMessage());

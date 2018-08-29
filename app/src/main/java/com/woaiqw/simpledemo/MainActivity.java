@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.os.MessageQueue;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.credic.common.utils.WeakHandler;
 import com.woaiqw.scm_api.SCM;
-import com.woaiqw.scm_api.ScCallback;
 import com.woaiqw.scm_api.utils.Constants;
 
 
@@ -35,20 +33,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     });
 
-    private Runnable entryHomeActivityTask = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                SCM.get().req(MainActivity.this, "HomeEntry", new ScCallback() {
-                    @Override
-                    public void onCallback(boolean b, final String data, String tag) {
-                        if (b)
-                            Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } catch (Exception e) {
-                Log.e(Constants.SCM, e.getMessage());
-            }
+    private Runnable entryHomeActivityTask = () -> {
+        try {
+            SCM.get().req(MainActivity.this, "HomeEntry", (b, data, tag) -> {
+                if (b)
+                    Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
+            });
+        } catch (Exception e) {
+            Log.e(Constants.SCM, e.getMessage());
         }
     };
     private TextView tvLoadConfig, tvJumpPage;
@@ -78,13 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         final long time = SystemClock.uptimeMillis();
         super.onResume();
-        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-            @Override
-            public boolean queueIdle() {
-                // on Measure() -> onDraw() 耗时
-                Log.i(MainActivity.this.getClass().getSimpleName(), "onCreate -> idle : " + (SystemClock.uptimeMillis() - time));
-                return false;
-            }
+        Looper.myQueue().addIdleHandler(() -> {
+            // on Measure() -> onDraw() 耗时
+            Log.i(MainActivity.this.getClass().getSimpleName(), "onCreate -> idle : " + (SystemClock.uptimeMillis() - time));
+            return false;
         });
     }
 
@@ -105,19 +94,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void loadConfigByHomeModule() {
         try {
-            SCM.get().req(MainActivity.this, "LoadConfig", new ScCallback() {
-                @Override
-                public void onCallback(boolean b, String data, String tag) {
-                    if (b) {
-                        Message obtain = Message.obtain();
-                        obtain.obj = data;
-                        if (h != null) {
-                            h.sendMessage(obtain);
-                        } else {
-                            Toast.makeText(MainActivity.this, "WeakHandler has been Gc", Toast.LENGTH_SHORT).show();
-                        }
-
+            SCM.get().req(MainActivity.this, "LoadConfig", (b, data, tag) -> {
+                if (b) {
+                    Message obtain = Message.obtain();
+                    obtain.obj = data;
+                    if (h != null) {
+                        h.sendMessage(obtain);
+                    } else {
+                        Toast.makeText(MainActivity.this, "WeakHandler has been Gc", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             });
         } catch (Exception e) {
