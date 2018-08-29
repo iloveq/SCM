@@ -141,16 +141,27 @@ try {
 注解工具的作用：action 加到注册表，通过 annotationProcessor 编译时注解，编译期生成（SCMTable）表注册
 注解工具链接：[ActionProcessor.java](https://github.com/woaigmz/SCM/blob/67f8236f029388b6791b822ffcc27c242b828150/scm-compiler/src/main/java/com/woaiqw/scm_compiler/processor/ActionProcessor.java)
 SCM优点：
+
 1：跨进程，通过传递的 json/string 字符实现类似 [CC](https://github.com/luckybilly/CC) 的通过socket协议传递字符流
+
 2：通过action对应的name，反射调用Action的invoke方法，实现解耦合 类似组件化项目 [ModularizationArchitecture](https://github.com/SpinyTech/ModularizationArchitecture) (aidl + service跨进程)
+
 3：注册表简洁易懂，想到了R文件的生成，public static final  "$actionName" = "@action对应action的实际包名"
+
 4：只要原来的协议不变（@action(name="XXX")）代码重构不会对action有影响
+
 5：编译期生成SCMTable提高了扫描整个包的性能
+
+
 maven上传命令：
 gradle install  /  gradlew bintrayUpload  上传项目到 maven
+
 查看有焦点的activity的包名
+
 linux:adb shell dumpsys activity | grep "mFocusedActivity" / windows:adb shell dumpsys activity | findstr "mFocusedActivity"
+
 不提供异步转通过方法，因为除了页面跳转，一般的action都是耗时操作，处理方式留给开发者具体问题具体对待，
+
 ```
 几种异步转同步：
 wait / notify
