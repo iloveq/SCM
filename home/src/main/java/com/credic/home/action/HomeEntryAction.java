@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.credic.home.view.HomeActivity;
-import com.woaiqw.scm_annotation.annotion.Action;
+import com.woaiqw.scm_annotation.annotation.Action;
 import com.woaiqw.scm_api.ScAction;
 import com.woaiqw.scm_api.ScCallback;
 
 
-@Action(name = "HomeEntry")
+@Action(name = "HomeEntry",module = "Home")
 public class HomeEntryAction implements ScAction {
 
     @Override

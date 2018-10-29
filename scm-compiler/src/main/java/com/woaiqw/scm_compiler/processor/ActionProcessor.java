@@ -4,7 +4,7 @@ package com.woaiqw.scm_compiler.processor;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
-import com.woaiqw.scm_annotation.annotion.Action;
+import com.woaiqw.scm_annotation.annotation.Action;
 import com.woaiqw.scm_compiler.model.ActionMeta;
 import com.woaiqw.scm_compiler.utils.Logger;
 
@@ -28,9 +28,7 @@ import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
 
 import static com.woaiqw.scm_compiler.utils.Constants.ANNOTATION_ACTION_PATH;
-import static com.woaiqw.scm_compiler.utils.Constants.DEFAULT_MODULE_NAME;
 import static com.woaiqw.scm_compiler.utils.Constants.FILE_COMMENT;
-import static com.woaiqw.scm_compiler.utils.Constants.KEY_MODULE_NAME;
 import static com.woaiqw.scm_compiler.utils.Constants.PACKAGE_OF_GENERATE_FILE;
 
 
@@ -44,7 +42,7 @@ public class ActionProcessor extends AbstractProcessor {
     private Logger logger;
     private Filer filer;
     private Map<String, ActionMeta> actionMap = new HashMap<>();
-    private String moduleName = DEFAULT_MODULE_NAME;
+
 
     @Override
     public synchronized void init(ProcessingEnvironment processingEnv) {
@@ -54,10 +52,7 @@ public class ActionProcessor extends AbstractProcessor {
         filer = processingEnv.getFiler();
         Map<String, String> options = processingEnv.getOptions();
         logger.info(">>> options <<<" + options);
-        if (options != null && options.size() != 0) {
-            moduleName = options.get(KEY_MODULE_NAME);
-        }
-        logger.info(">>> option - module - name <<<" + moduleName);
+
 
     }
 
@@ -130,6 +125,7 @@ public class ActionProcessor extends AbstractProcessor {
 
         logger.info("start generateJavaSuperFile ..... " + fieldSpecs.size());
 
+        String moduleName = actionMap.get(fieldSpecs.get(0).name).getModule();
         logger.info("moduleName ..... " + moduleName);
 
         TypeSpec ts = TypeSpec.classBuilder(moduleName + "SCMTable")
@@ -143,12 +139,6 @@ public class ActionProcessor extends AbstractProcessor {
 
     }
 
-    @Override
-    public Set<String> getSupportedOptions() {
-        Set<String> options = new LinkedHashSet<>();
-        options.add(KEY_MODULE_NAME);
-        return options;
-    }
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {

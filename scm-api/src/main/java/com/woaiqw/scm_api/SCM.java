@@ -1,12 +1,15 @@
 package com.woaiqw.scm_api;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.woaiqw.scm_annotation.annotation.Modules;
 import com.woaiqw.scm_api.utils.Constants;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.woaiqw.scm_api.utils.Constants.PACKAGE_OF_GENERATE_FILE;
 
@@ -18,7 +21,7 @@ public class SCM {
 
     private static volatile SCM instance = null;
     private HashMap<String, ScAction> actionMap = new HashMap<>();
-    private boolean isReady;
+    private AtomicBoolean isReady = new AtomicBoolean(false);
 
     private SCM() {
     }
@@ -33,8 +36,10 @@ public class SCM {
         return instance;
     }
 
-    public void scanningSCMTable(String[] moduleNames) {
-        if (moduleNames != null && moduleNames.length != 0) {
+    public void scanningSCMTable(Class<? extends Application> o) {
+        Modules annotation = o.getAnnotation(Modules.class);
+        String[] moduleNames = annotation.names();
+        if (moduleNames.length != 0) {
             for (String moduleName : moduleNames) {
                 try {
                     Class clazz = Class.forName(PACKAGE_OF_GENERATE_FILE + "." + moduleName + "SCMTable");
@@ -56,7 +61,7 @@ public class SCM {
             throw new IllegalStateException(" moduleNames must a exit arr for scanning ");
         }
 
-        isReady = true;
+        isReady.set(true);
     }
 
     /**
@@ -80,7 +85,7 @@ public class SCM {
      * @throws Exception
      */
     public void req(Context context, String actionName, String param, ScCallback callback) throws Exception {
-        if (!isReady) {
+        if (!isReady.get()) {
             throw new RuntimeException("SCM is not ready! pls wait!");
         }
         if (!actionMap.containsKey(actionName)) {
