@@ -35,7 +35,7 @@ repositories {
 ```
 2:你的每个module的build.gradle
 
-...
+```
 
 dependencies {
     compile 'com.woaigmz.scm:scm-api:0.0.5'
