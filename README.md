@@ -33,16 +33,7 @@ repositories {
     }
 ```
 2:你的每个module的build.gradle
-```
-defaultConfig {
-        ...
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [KEY_MODULE_NAME:"Main"]
-                includeCompileClasspath true
-            }
-        }
-    }
+
 ...
 dependencies {
     compile 'com.woaigmz.scm:scm-api:0.0.5'
@@ -50,6 +41,7 @@ dependencies {
     annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.5'
     }
 ```
+
 3：初始化
 ```
 @Modules(names = {"Main", "Home"})
