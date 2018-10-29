@@ -27,6 +27,8 @@ dependencies {
     api "com.android.support:appcompat-v7:${versions.support_library}"
     api "com.android.support:recyclerview-v7:${versions.support_library}"
     //ServerRegisterCenter
-    compile 'com.woaigmz.scm:scm-api:0.0.4'
-    compile 'com.woaigmz.scm:scm-annotation:0.0.4'
+    //compile 'com.woaigmz.scm:scm-api:0.0.4'
+    // compile 'com.woaigmz.scm:scm-annotation:0.0.4'
+    api project(':scm-annotation')
+    api project(':scm-api')
 }

@@ -45,5 +45,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(path: ':common')
-    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.4'
+   // annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.4'
+    annotationProcessor project(':scm-compiler')
 }
