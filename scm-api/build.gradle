@@ -34,7 +34,7 @@ dependencies {
     api project(':scm-annotation')
 }
 
-//apply from: "${rootProject.projectDir}/maven-push.gradle"
+apply from: "${rootProject.projectDir}/maven-push.gradle"
 
 
 
