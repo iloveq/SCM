@@ -21,7 +21,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-apply from: "${rootProject.projectDir}/installv1.gradle"
-apply from: "${rootProject.projectDir}/bintrayv1.gradle"
+apply from: "${rootProject.projectDir}/maven-push.gradle"
+
 
 
