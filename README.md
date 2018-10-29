@@ -45,26 +45,26 @@ defaultConfig {
     }
 ...
 dependencies {
-    compile 'com.woaigmz.scm:scm-api:0.0.4'
-    compile 'com.woaigmz.scm:scm-annotation:0.0.4'
-    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.4'
+    compile 'com.woaigmz.scm:scm-api:0.0.5'
+    compile 'com.woaigmz.scm:scm-annotation:0.0.5'
+    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.5'
     }
 ```
 3：初始化
 ```
+@Modules(names = {"Main", "Home"})
 public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //对应每个module的 arguments = [KEY_MODULE_NAME:"Main"]
-        SCM.get().scanningSCMTable(new String[]{"Main", "Home"});
+        SCM.get().scanningSCMTable(App.class);
     }
 }
 ```
 4：定义 Service（@Action）为 module-home/actions/HomeLoadConfigAction，为 home-module 提供给外界的api
 ```
 //home-module/actions/HomeLoadConfigAction 
-@Action(name = "LoadConfig")
+@Action(name = "LoadConfig", module = "Home")
 public class HomeLoadConfigAction implements ScAction {
 
     @Override
@@ -75,7 +75,7 @@ public class HomeLoadConfigAction implements ScAction {
 
 }
 //home-module/actions/HomeEntryAction 
-@Action(name = "HomeEntry")
+@Action(name = "HomeEntry", module = "Home")
 public class HomeEntryAction implements ScAction {
 
     @Override
