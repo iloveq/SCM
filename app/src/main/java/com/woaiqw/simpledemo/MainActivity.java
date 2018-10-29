@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Runnable entryHomeActivityTask = () -> {
         try {
-            SCM.get().req(MainActivity.this, "HomeEntry", (b, data, tag) -> {
+            SCM.get().req(MainActivity.this, "HomeEntry","你好，我是Main", (b, data, tag) -> {
                 if (b)
                     Toast.makeText(MainActivity.this, data, Toast.LENGTH_SHORT).show();
             });
