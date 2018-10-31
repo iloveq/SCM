@@ -36,11 +36,19 @@ repositories {
 2:你的每个module的build.gradle
 
 ```
+defaultConfig {
+        ...
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+    }
 
 dependencies {
-    compile 'com.woaigmz.scm:scm-api:0.0.5'
-    compile 'com.woaigmz.scm:scm-annotation:0.0.5'
-    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.5'
+    compile 'com.woaigmz.scm:scm-api:0.0.8'
+    compile 'com.woaigmz.scm:scm-annotation:0.0.8'
+    annotationProcessor 'com.woaigmz.scm:scm-compiler:0.0.8'
     }
 
 ```
