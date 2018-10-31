@@ -31,11 +31,11 @@ android {
 }
 
 dependencies {
-    implementation 'com.woaigmz.scm:scm-annotation:0.0.6'
+    implementation project(':scm-annotation')
 }
 
-/*apply from: "${rootProject.projectDir}/installv1.gradle"
-apply from: "${rootProject.projectDir}/bintrayv1.gradle"*/
+apply from: "${rootProject.projectDir}/installv1.gradle"
+apply from: "${rootProject.projectDir}/bintrayv1.gradle"
 
 
 

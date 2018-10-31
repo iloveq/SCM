@@ -8,16 +8,16 @@ ext {
     libraryVersion = scm_annotation_version
 }
 
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
-
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-//apply from: "${rootProject.projectDir}/installv1.gradle"
-//apply from: "${rootProject.projectDir}/bintrayv1.gradle"
+apply from: "${rootProject.projectDir}/installv1.gradle"
+apply from: "${rootProject.projectDir}/bintrayv1.gradle"

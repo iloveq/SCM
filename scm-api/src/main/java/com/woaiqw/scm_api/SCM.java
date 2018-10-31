@@ -48,7 +48,6 @@ public class SCM {
                         for (Field field : fields) {
                             String name = field.getName();
                             String path = (String) field.get(name);
-                            System.out.println("111" + "action:" + field.getName() + "value:" + field.get(field.getName()));
                             ScAction sca = (ScAction) Class.forName(path).newInstance();
                             actionMap.put(name, sca);
                         }
@@ -64,26 +63,12 @@ public class SCM {
         isReady.set(true);
     }
 
-    /**
-     * request/ no param
-     *
-     * @param actionName the annotation of action name
-     * @param callback   the callback
-     * @throws Exception
-     */
+
     public void req(Context context, String actionName, ScCallback callback) throws Exception {
         req(context, actionName, null, callback);
     }
 
 
-    /**
-     * request/ param
-     *
-     * @param actionName the annotation of action name
-     * @param param      request param or json
-     * @param callback   the callback
-     * @throws Exception
-     */
     public void req(Context context, String actionName, String param, ScCallback callback) throws Exception {
         if (!isReady.get()) {
             throw new RuntimeException("SCM is not ready! pls wait!");
