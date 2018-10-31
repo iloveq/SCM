@@ -11,7 +11,7 @@ ext {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':scm-annotation')
+    implementation 'com.woaigmz.scm:scm-annotation:0.0.6'
 }
 
 sourceCompatibility = "1.8"
@@ -21,7 +21,8 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-//apply from: "${rootProject.projectDir}/maven-push.gradle"
+apply from: "${rootProject.projectDir}/installv1.gradle"
+apply from: "${rootProject.projectDir}/bintrayv1.gradle"
 
 
 
