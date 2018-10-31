@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
-import com.woaiqw.scm_annotation.annotation.Modules;
+import com.woaiqw.annotation.Modules;
 import com.woaiqw.scm_api.utils.Constants;
 
 import java.lang.reflect.Field;

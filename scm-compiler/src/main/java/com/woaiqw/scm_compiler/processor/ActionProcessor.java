@@ -4,7 +4,7 @@ package com.woaiqw.scm_compiler.processor;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
-import com.woaiqw.scm_annotation.annotation.Action;
+import com.woaiqw.annotation.Action;
 import com.woaiqw.scm_compiler.model.ActionMeta;
 import com.woaiqw.scm_compiler.utils.Logger;
 
@@ -85,7 +85,7 @@ public class ActionProcessor extends AbstractProcessor {
         return true;
     }
 
-    private void parseActions(Set<? extends Element> actionElements) throws IOException {
+    private void parseActions(Set<? extends Element> actionElements) {
 
         for (Element e : actionElements) {
             if (e.getKind() == ElementKind.CLASS) {
@@ -104,7 +104,7 @@ public class ActionProcessor extends AbstractProcessor {
 
     }
 
-    private JavaFile generateJavaSuperRFile() throws IOException {
+    private JavaFile generateJavaSuperRFile() {
 
         if (actionMap == null || actionMap.size() == 0) {
             return null;

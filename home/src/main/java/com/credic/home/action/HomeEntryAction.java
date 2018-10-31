@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.credic.home.view.HomeActivity;
-import com.woaiqw.scm_annotation.annotation.Action;
+import com.woaiqw.annotation.Action;
 import com.woaiqw.scm_api.ScAction;
 import com.woaiqw.scm_api.ScCallback;
 

@@ -3,7 +3,7 @@ package com.credic.home.action;
 import android.content.Context;
 
 import com.credic.home.data.DataProvider;
-import com.woaiqw.scm_annotation.annotation.Action;
+import com.woaiqw.annotation.Action;
 import com.woaiqw.scm_api.ScAction;
 import com.woaiqw.scm_api.ScCallback;
 

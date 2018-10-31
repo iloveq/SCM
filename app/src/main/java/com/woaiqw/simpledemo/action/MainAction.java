@@ -3,7 +3,7 @@ package com.woaiqw.simpledemo.action;
 import android.content.Context;
 import android.content.Intent;
 
-import com.woaiqw.scm_annotation.annotation.Action;
+import com.woaiqw.annotation.Action;
 import com.woaiqw.scm_api.ScAction;
 import com.woaiqw.scm_api.ScCallback;
 

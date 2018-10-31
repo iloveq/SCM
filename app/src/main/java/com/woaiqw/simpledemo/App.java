@@ -2,7 +2,7 @@ package com.woaiqw.simpledemo;
 
 import android.app.Application;
 
-import com.woaiqw.scm_annotation.annotation.Modules;
+import com.woaiqw.annotation.Modules;
 import com.woaiqw.scm_api.SCM;
 
 /**
