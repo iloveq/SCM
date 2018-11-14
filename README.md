@@ -23,6 +23,9 @@ SCM 不支持 Install Run
 action  ---> module actionTable  --->  scmTable
 ![SCM.png](https://upload-images.jianshu.io/upload_images/8886407-2b1024e63dfdbe4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ## 使用：
+
+关闭 instant run ，否则会解析失败
+
 1:根项目root-project的build.gradle
 ```
 repositories {
